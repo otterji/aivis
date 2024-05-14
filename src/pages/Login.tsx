@@ -1,19 +1,27 @@
 import { FormEvent, useState } from 'react';
 
-import { useAuth } from '../hooks/useAuth';
+import { USER_TOKEN_NAME } from '../constants';
+import { getToken } from '../api/getToken';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+
+  const navigate = useNavigate();
+
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (username === 'coding_test' && password === 'coding0000') {
-      await login({ username, password });
-    } else {
-      alert('Invalid username or password');
+
+    try {
+      const token = await getToken({ username, password });
+      localStorage.setItem(USER_TOKEN_NAME, token);
+      navigate('/project');
+    } catch (err) {
+      console.log(err);
     }
   };
+
   return (
     <div>
       <form onSubmit={handleLogin}>

@@ -1,31 +1,31 @@
-import { USER_TOKEN_NAME } from '../constants';
 import { useState } from 'react';
 
-export const useLocalStorage = (
-  defaultValue: string | null,
-  keyName = USER_TOKEN_NAME,
-) => {
-  const [storedValue, setStoredValue] = useState(() => {
+export function useLocalStorage(
+  key: string,
+  initialValue: string | null,
+): [string | null, (value: string | null) => void] {
+  const [storedValue, setStoredValue] = useState<string | null>(() => {
     try {
-      const item = window.localStorage.getItem(keyName);
-      return item ? JSON.parse(item) : defaultValue;
-    } catch (err) {
-      console.log(`Error parsing the localStorage item "${keyName}": `, err);
-      window.localStorage.setItem(keyName, JSON.stringify(defaultValue));
-      return defaultValue;
+      const item = window.localStorage.getItem(key);
+      return item !== null ? item : initialValue;
+    } catch (error) {
+      console.error(`Error retrieving the localStorage item "${key}": `, error);
+      return initialValue;
     }
   });
 
-  const setValue = (newValue: string | null) => {
+  const setValue = (value: string | null): void => {
     try {
-      const stringValue = JSON.stringify(newValue);
-      const unquotedStringValue = stringValue.replace(/^"|"$/g, '');
-      window.localStorage.setItem(keyName, unquotedStringValue);
-      setStoredValue(newValue);
-    } catch (err) {
-      console.log(`Error setting localStorage key "${keyName}": `, err);
+      if (value === null) {
+        window.localStorage.removeItem(key);
+      } else {
+        window.localStorage.setItem(key, value);
+      }
+      setStoredValue(value);
+    } catch (error) {
+      console.error(`Error setting the localStorage key "${key}": `, error);
     }
   };
 
   return [storedValue, setValue];
-};
+}

@@ -1,11 +1,20 @@
-import { useAuth } from '../hooks/useAuth';
+import { USER_TOKEN_NAME } from '../constants';
+import { getProjects } from '../api/project/getProjects';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Project = () => {
-  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    localStorage.removeItem(USER_TOKEN_NAME);
+    navigate('/login');
   };
+
+  useEffect(() => {
+    const projects = getProjects();
+    console.log(projects);
+  }, []);
 
   return (
     <div>

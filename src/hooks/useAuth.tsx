@@ -6,7 +6,7 @@ import { useLocalStorage } from './useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
-  user: string;
+  user: string | null;
   login: (data: any) => Promise<void>;
   logout: () => void;
 }
@@ -19,12 +19,12 @@ interface LoginProps {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useLocalStorage('', USER_TOKEN_NAME);
+  const [user, setUser] = useLocalStorage(USER_TOKEN_NAME, null);
   const navigate = useNavigate();
 
   const login = async ({ username, password }: LoginProps) => {
     const token = await getToken({ username, password });
-    setUser(token);
+    localStorage.setItem(USER_TOKEN_NAME, token);
     navigate('/project');
   };
 

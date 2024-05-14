@@ -1,16 +1,16 @@
 import React, { ReactNode } from 'react';
 
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { USER_TOKEN_NAME } from '../constants';
 
 type ProtectedRouteProps = {
   children: ReactNode;
 };
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { user } = useAuth();
+  const isLoggedin = localStorage.getItem(USER_TOKEN_NAME) || '';
 
-  if (!user) {
+  if (!isLoggedin) {
     return <Navigate to="/login" replace />;
   }
 

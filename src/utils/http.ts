@@ -1,14 +1,13 @@
-import { BASE_URL, USER_TOKEN } from '../constants';
+import { BASE_URL, USER_TOKEN_NAME } from '../constants';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export const instance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'content-type': 'application/json',
-    Authorization: `Bearer ${USER_TOKEN}`,
+    Authorization: `Bearer ${localStorage.getItem(USER_TOKEN_NAME)}`,
   },
 });
-
 export interface Response<T> {
   success: boolean;
   data: T;
