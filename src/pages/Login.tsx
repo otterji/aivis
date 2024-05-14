@@ -1,15 +1,11 @@
 import { FormEvent, useState } from 'react';
 
-import { USER_TOKEN_NAME } from '../constants';
-import { getToken } from '../api/getToken';
-import { useGetUser } from '../hooks/useGetToken';
-import { useNavigate } from 'react-router-dom';
+import { useGetUser } from '../hooks/useGetUser';
 
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const navigate = useNavigate();
   const { login } = useGetUser({ username, password });
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {

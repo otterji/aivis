@@ -23,7 +23,6 @@ export interface Project {
 interface GetProjectsParams {
   sort: SortOption;
   order: OrderOption;
-  max: number;
 }
 
 export const getProjects = async (params: GetProjectsParams) => {

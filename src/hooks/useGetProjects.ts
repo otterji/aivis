@@ -12,8 +12,7 @@ interface UseGetProjectsProps {
 export const useGetProjects = (props: UseGetProjectsProps) => {
   const { pagination, sortOption } = props;
   const params = {
-    sort: sortOption.sort,
-    order: sortOption.order,
+    ...sortOption,
     max: pagination.pageSize,
     offset: pagination.offset,
   };

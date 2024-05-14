@@ -24,6 +24,7 @@ const Pagination = (props: PaginationProps) => {
     setPagination,
     isResetLastPage = false,
   } = props;
+
   const [saveTotalCount, setSaveTotalCount] = useState(totalCount || 1);
 
   const totalPage = Math.ceil(saveTotalCount / pagination.pageSize);

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Pagination from '../components/Pagination';
 import { USER_TOKEN_NAME } from '../constants';
+import { columns } from '../constants/columns';
 import { useCreateProject } from '../hooks/useCreateProject';
 import { useGetProjects } from '../hooks/useGetProjects';
 import { useNavigate } from 'react-router-dom';
@@ -32,22 +33,19 @@ export const Project = () => {
   });
   const { createProject, createProjectLoading } = useCreateProject();
 
-  const headers = ['', 'name', 'numberOfImages', 'created'] as SortOption[];
+  const handleCreateProject = () => {
+    const projectName = prompt(
+      '생성할 프로젝트의 이름을 입력하세요 (ontologyId: 34956166) : ',
+      '',
+    );
+    if (projectName) {
+      createProject({ name: projectName, ontologyId: 34956166 });
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem(USER_TOKEN_NAME);
     navigate('/login');
-  };
-
-  const handleSort = ({ sort, order }: ProjectsOrder) => {
-    setSortOptions({ sort, order });
-  };
-
-  const handleCreateProject = () => {
-    const projectName = prompt('프로젝트 이름을 입력하세요:', '');
-    if (projectName) {
-      createProject({ name: projectName, ontologyId: 34956166 });
-    }
   };
 
   return (
@@ -87,17 +85,17 @@ export const Project = () => {
         >
           <thead>
             <tr style={{ borderBottom: '1px solid #ddd', padding: 10 }}>
-              {headers.map((header, idx) => (
+              {columns.map((column, idx) => (
                 <th key={idx}>
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    {header}
-                    {header &&
+                    {column}
+                    {column &&
                       (['asc', 'desc'] as OrderOption[]).map((od) => {
                         return (
                           <button
                             key={od}
                             onClick={() =>
-                              handleSort({ sort: header, order: od })
+                              setSortOptions({ sort: column, order: od })
                             }
                           >
                             {od}

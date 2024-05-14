@@ -1,6 +1,6 @@
-import { HTTP, Response } from '../utils/http';
+import { HTTP } from '../utils/http';
 
-interface GetUserParams {
+export interface GetUserParams {
   username: string;
   password: string;
 }
