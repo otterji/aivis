@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react';
 
 import { USER_TOKEN_NAME } from '../constants';
 import { getToken } from '../api/getToken';
+import { useGetUser } from '../hooks/useGetToken';
 import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
@@ -9,17 +10,11 @@ export const Login = () => {
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
+  const { login } = useGetUser({ username, password });
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    try {
-      const token = await getToken({ username, password });
-      localStorage.setItem(USER_TOKEN_NAME, token);
-      navigate('/project');
-    } catch (err) {
-      console.log(err);
-    }
+    login();
   };
 
   return (

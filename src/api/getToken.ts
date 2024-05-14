@@ -5,7 +5,7 @@ interface GetUserParams {
   password: string;
 }
 
-interface AuthResponse {
+export interface AuthResponse {
   shortTermToken: string;
   token: string;
 }
@@ -15,5 +15,5 @@ export const getToken = async (params: GetUserParams) => {
     `/authenticate`,
     params,
   );
-  return res.data.token;
+  return res.data;
 };

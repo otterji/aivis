@@ -1,13 +1,26 @@
 import { BASE_URL, USER_TOKEN_NAME } from '../constants';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export const instance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'content-type': 'application/json',
-    Authorization: `Bearer ${localStorage.getItem(USER_TOKEN_NAME)}`,
   },
 });
+
+instance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem(USER_TOKEN_NAME);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
 export interface Response<T> {
   success: boolean;
   data: T;
@@ -18,12 +31,8 @@ export interface Response<T> {
 }
 
 instance.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return response;
-  },
-  (error: AxiosError) => {
-    return Promise.reject(error);
-  },
+  (response) => response,
+  (error) => Promise.reject(error),
 );
 
 export const HTTP = {
