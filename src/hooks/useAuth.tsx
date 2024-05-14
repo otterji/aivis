@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useMemo } from 'react';
 
+import { USER_TOKEN_NAME } from '../constants';
 import { useLocalStorage } from './useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useLocalStorage('aivis-token', '');
+  const [user, setUser] = useLocalStorage(USER_TOKEN_NAME, '');
   const navigate = useNavigate();
 
   const login = async (data: any) => {

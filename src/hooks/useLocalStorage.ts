@@ -1,8 +1,9 @@
+import { USER_TOKEN_NAME } from '../constants';
 import { useState } from 'react';
 
 export const useLocalStorage = (
   defaultValue: string | null,
-  keyName = 'avis-token',
+  keyName = USER_TOKEN_NAME,
 ) => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
