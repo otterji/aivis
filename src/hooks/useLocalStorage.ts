@@ -18,9 +18,9 @@ export const useLocalStorage = (
 
   const setValue = (newValue: string | null) => {
     try {
-      console.log(newValue);
       const stringValue = JSON.stringify(newValue);
-      window.localStorage.setItem(keyName, stringValue);
+      const unquotedStringValue = stringValue.replace(/^"|"$/g, '');
+      window.localStorage.setItem(keyName, unquotedStringValue);
       setStoredValue(newValue);
     } catch (err) {
       console.log(`Error setting localStorage key "${keyName}": `, err);
