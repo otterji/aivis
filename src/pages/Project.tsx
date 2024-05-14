@@ -44,7 +44,7 @@ export const Project = () => {
   return (
     <div style={{ paddingInline: 50 }}>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <h1>Project page</h1>
           <div style={{ alignContent: 'center' }}>
             <button
@@ -110,7 +110,12 @@ export const Project = () => {
                       close
                     </button>
                   </td>
-                  <td style={{ textAlign: 'center' }}>{x.name}</td>
+                  <td
+                    style={{ textAlign: 'center', cursor: 'pointer' }}
+                    onClick={() => navigate(`/project/${x.id}`)}
+                  >
+                    {x.name}
+                  </td>
                   <td style={{ textAlign: 'center' }}>{x.numberOfImages}</td>
                   <td style={{ textAlign: 'center' }}>{x.created}</td>
                 </tr>
