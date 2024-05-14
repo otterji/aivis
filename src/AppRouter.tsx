@@ -7,7 +7,7 @@ import { Login } from './pages/Login';
 import { Project } from './pages/Project';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 
-function App() {
+function AppRouter() {
   return (
     <AuthProvider>
       <Routes>
@@ -26,4 +26,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppRouter;

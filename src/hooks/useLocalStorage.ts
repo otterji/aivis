@@ -7,24 +7,25 @@ export const useLocalStorage = (
 ) => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
-      const value = window.localStorage.getItem(keyName);
-      if (value) {
-        return JSON.parse(value);
-      } else {
-        window.localStorage.setItem(keyName, JSON.stringify(defaultValue));
-        return defaultValue;
-      }
+      const item = window.localStorage.getItem(keyName);
+      return item ? JSON.parse(item) : defaultValue;
     } catch (err) {
+      console.log(`Error parsing the localStorage item "${keyName}": `, err);
+      window.localStorage.setItem(keyName, JSON.stringify(defaultValue));
       return defaultValue;
     }
   });
+
   const setValue = (newValue: string | null) => {
     try {
-      window.localStorage.setItem(keyName, JSON.stringify(newValue));
+      console.log(newValue);
+      const stringValue = JSON.stringify(newValue);
+      window.localStorage.setItem(keyName, stringValue);
+      setStoredValue(newValue);
     } catch (err) {
-      console.log(err);
+      console.log(`Error setting localStorage key "${keyName}": `, err);
     }
-    setStoredValue(newValue);
   };
+
   return [storedValue, setValue];
 };
