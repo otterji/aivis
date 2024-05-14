@@ -64,6 +64,9 @@ module.exports = {
     'react/function-component-definition': 'off',
     'react-refresh/only-export-components': 'warn',
     'react/jsx-props-no-spreading': 'off',
-    "@typescript-eslint/no-explicit-any": "warn"
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "warn"
+    ]
   }
 };

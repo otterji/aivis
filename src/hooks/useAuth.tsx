@@ -1,6 +1,6 @@
+import { CODING_TEST_TOKEN, USER_TOKEN_NAME } from '../constants';
 import { ReactNode, createContext, useContext, useMemo } from 'react';
 
-import { USER_TOKEN_NAME } from '../constants';
 import { useLocalStorage } from './useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,8 +17,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
 
   const login = async (data: any) => {
-    setUser(data);
-    navigate('/profile');
+    // INFO: authenticate api에 CORS block이 되어서 연결은 안했음!
+    // getUser({ username, password })
+    setUser(CODING_TEST_TOKEN);
+    navigate('/project');
   };
 
   const logout = () => {

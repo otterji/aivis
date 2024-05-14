@@ -5,9 +5,8 @@ export const instance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'content-type': 'application/json',
-    Authorization: `${USER_TOKEN}`,
+    Authorization: `Bearer ${USER_TOKEN}`,
   },
-  withCredentials: true,
 });
 
 export interface Response<T> {

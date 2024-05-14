@@ -9,6 +9,7 @@ export const Login = () => {
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (username === 'coding_test' && password === 'coding0000') {
+      // await login({ username, password });
       await login({ username });
     } else {
       alert('Invalid username or password');
