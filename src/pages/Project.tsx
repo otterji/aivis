@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Pagination from '../components/Pagination';
 import { USER_TOKEN_NAME } from '../constants';
+import { useCreateProject } from '../hooks/useCreateProject';
 import { useGetProjects } from '../hooks/useGetProjects';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,6 +30,7 @@ export const Project = () => {
     pagination,
     sortOption,
   });
+  const { createProject, createProjectLoading } = useCreateProject();
 
   const headers = ['', 'name', 'numberOfImages', 'created'] as SortOption[];
 
@@ -39,6 +41,13 @@ export const Project = () => {
 
   const handleSort = ({ sort, order }: ProjectsOrder) => {
     setSortOptions({ sort, order });
+  };
+
+  const handleCreateProject = () => {
+    const projectName = prompt('프로젝트 이름을 입력하세요:', '');
+    if (projectName) {
+      createProject({ name: projectName, ontologyId: 34956166 });
+    }
   };
 
   return (
@@ -60,14 +69,14 @@ export const Project = () => {
                 boxShadow: '0 4px 8px rgba(0, 123, 255, 0.3)',
                 height: '50px',
               }}
-              onClick={() => console.log('Project creation initiated')}
+              onClick={handleCreateProject}
             >
               프로젝트 생성
             </button>
           </div>
         </div>
 
-        {isLoading && <h1>Loading...</h1>}
+        {isLoading && createProjectLoading && <h1>Loading...</h1>}
 
         <table
           style={{
