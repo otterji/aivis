@@ -1,13 +1,15 @@
-import { HTTP } from '../../utils/http';
+import { OrderOption, SortOption } from '../../pages/Project';
 
-type Value = 'sort' | 'order' | 'offset';
-type DefaultValue = 'false' | 'true' | 'created' | 'desc' | 'asc' | '0';
+import { HTTP } from '../../utils/http';
 
 export type Collection = {
   id: number;
   name: string;
   numberOfImages: number;
   created: string;
+  numberOfAnnotations: number;
+  numberOfSlides: number;
+  ontologyName: string;
 };
 
 export interface Project {
@@ -18,14 +20,15 @@ export interface Project {
   collection: Collection[];
 }
 
-interface ProjectParams {
-  value?: Value;
-  defaultValue?: DefaultValue;
-  required?: boolean;
+interface GetProjectsParams {
+  sort: SortOption;
+  order: OrderOption;
+  max: number;
 }
 
-export const getProjects = async () => {
-  const res = await HTTP.get<Project>(`/project.json`);
+export const getProjects = async (params: GetProjectsParams) => {
+  const query = new URLSearchParams(params as any).toString();
+  const res = await HTTP.get<Project>(`/project.json?${query}`);
 
   return res.data;
 };
